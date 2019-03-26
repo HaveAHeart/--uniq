@@ -10,25 +10,52 @@ import java.util.Scanner;
 
 class Unique {
 
+    /** [-i] caseIgnore flag:
+     * ignore case of lines while comparing them.
+     */
     @Option(name = "-i", usage = "enables case ignore")
     private boolean iActive;
 
+    /** [-u] unique lines mode:
+     * output only unique lines (unique for the whole input).
+     * Can not be used with count mode flag.
+     */
     @Option(name = "-u", usage = "enables unique lines output - does not work with -c flag")
     private boolean uActive;
 
+    /** [-c] count mode:
+     * added amount of lines replaced with tht line given.
+     */
     @Option(name = "-c", usage = "enables counting of replaced lines")
     private boolean cActive;
 
+    /** [-s N] skip flag:
+     * ignore (skip) first N characters while comparing the lines.
+     * parameter N can not be negative.
+     */
     @Option(name = "-s", usage = "ignore first N symbols")
     private int ignoreNum;
 
+    /** [-o ofile] file output mode:
+     * set the output in the file ofile.
+     * If ofile can not be reached or this flag is not active - output will be printed in console.
+     */
     @Option(name = "-o", usage = "sets the output file")
     private String outName;
 
+    /** [ifile] file input mode:
+     * get the input from file ifile.
+     * If ifile can not be reached or this flag is not active - input will be received from console.
+     * Should be the only one element in arguments due to command line arguments/flags format.
+     */
     @Argument
     private ArrayList<String> arguments = new ArrayList<>();
 
-    //checking input options/arguments
+    /**@throws InputMismatchException
+     * check command line arguments for correctness.
+     * Throws InputMismatchException if [-c] and [-u] are both active at the same time or if
+     * [-s N] N is negative.
+     */
     public void cmdInputCheck() {
         if (cActive && uActive)
             throw new InputMismatchException("-c and -u flags should not be active at the same time");
@@ -36,15 +63,14 @@ class Unique {
             throw new InputMismatchException("-s N error: N should be greater or equal to zero");
     }
 
-    //getting the input with getLines() method: from the file if input file name is given
-    //or from console if input file is unreachable or if input file name was not given
+    /** getting the input lines with getLines() method: from the file if input file name is given
+     * or from console if input file is unreachable or if input file name was not given.
+     */
     private ArrayList<String> lines = new ArrayList<>();
-
     private String cmdGetLine() {
         Scanner in = new Scanner(System.in);
         return in.nextLine();
     }
-
     private ArrayList<String> getLines() {
         ArrayList<String> tempLines = new ArrayList<>();
 
@@ -86,8 +112,9 @@ class Unique {
         return tempLines;
     }
 
-    //method for lines output: in file, if -o is active,
-    // or in console, if output file is unreachable or if -o was not given
+    /**method for lines output: in file, if -o is active,
+     * or in console, if output file is unreachable or if -o was not given.
+     */
     private void returnLines(ArrayList<String> output) {
         if (outName == null) {
             System.out.println("console output mode:");
@@ -115,7 +142,7 @@ class Unique {
         returnLines(out);
     }
 
-    //comparing previous and current lines considering -i and -s flags
+    /** comparing previous and current lines considering [-i] and [-s N] flags. */
     private boolean compare(String prevString, String currString) {
         //caseIgnore flag
         if (iActive) {
@@ -130,7 +157,7 @@ class Unique {
         return prevSB.toString().equals(currSB.toString());
     }
 
-    //search for copies of the String given - uses compare() method, so it pays attention to the flags given
+    /** search for copies of the String given - uses compare() method, so it pays attention to the flags given. */
     private boolean isUnique(String line, int index) {
         boolean isUnique = true;
         for (int i = 0; i < lines.size(); i++) {
@@ -142,7 +169,7 @@ class Unique {
         return isUnique;
     }
 
-    //main method - generating output considering arguments/options given
+    /** basic method - generating output considering arguments/options given. */
     private ArrayList<String> iterating() {
         ArrayList<String> output = new ArrayList<>();
 

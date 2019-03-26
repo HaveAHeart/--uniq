@@ -5,17 +5,18 @@ import org.kohsuke.args4j.CmdLineParser;
 
 class Main {
     /**
-     * command line program for doing some stuff with unique and repeating strings
-     * format: uniq [-i] [-u] [-c] [-s num] [-o ofile] [file]
+     * @author Alexey Bedrin
+     * --uniq - command line program for doing some stuff with unique and repeating strings
+     * format: uniq [-i] [-u] [-c] [-s num] [-o ofile] [ifile]
      * replacing identical consecutive strings with only one.
      * e.g.: ["foo", "bar", "bar", "foo"] will return ["foo", "bar", "foo"]
      * flags:
-     * -i - ignore case while comparing strings
-     * -u - return only original strings(do not work with -c flag)
-     * -c - return amount of identical lines replaced before returning the line
-     * -s num - ignore first num symbols while comparing strings
-     * -o ofile - print the output in output file ofile. If it is not given - output in console
-     * file - get the lines from input file file. If it is not given - input in console
+     * @see [-i] flag and iActive boolean field in Unique class.
+     * @see [-u] flag and uActive boolean field in Unique class.
+     * @see [-c] flag and cActive boolean field in Unique class.
+     * @see [-s N] flag and int ignoreNum field in Unique class.
+     * @see [-o ofile] flag and String outName field in Unique class.
+     * @see [ifile] flag and arguments field in Unique class.
      */
 
 
