@@ -1,12 +1,7 @@
-package main.java;
+package main;
 
-import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
-import org.kohsuke.args4j.Option;
-
-import java.io.IOException;
-import java.util.ArrayList;
 
 class Main {
     /**
@@ -24,7 +19,7 @@ class Main {
      */
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         //parsing arguments
         Unique bean = new Unique();
@@ -39,6 +34,5 @@ class Main {
 
         bean.run();
     }
-
 }
 

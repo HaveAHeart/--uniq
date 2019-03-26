@@ -1,0 +1,3 @@
+3 AaaAA
+2 gBBBB
+1 dcccc

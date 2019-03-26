@@ -1,13 +1,16 @@
-package main.java;
+package main;
 
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.Option;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 class Unique {
+
+    //ATTENTION: most of methods will have package-private access instead of private due to testing
 
     @Option(name = "-i", usage = "enables case ignore")
     private boolean iActive;
@@ -27,9 +30,17 @@ class Unique {
     @Argument
     private ArrayList<String> arguments = new ArrayList<>();
 
+    //checking input options/arguments
+    public void cmdInputCheck() {
+        if (cActive && uActive)
+            throw new InputMismatchException("-c and -u flags should not be active at the same time");
+        else if (ignoreNum < 0)
+            throw new InputMismatchException("-s N error: N should be greater or equal to zero");
+    }
+
     //getting the input with getLines() method: from the file if input file name is given
     //or from console if input file is unreachable or if input file name was not given
-    private ArrayList<String> lines = getLines();
+    private ArrayList<String> lines = new ArrayList<>();
     private String cmdGetLine() {
         Scanner in = new Scanner(System.in);
         return in.nextLine();
@@ -40,10 +51,14 @@ class Unique {
         //if [file] field was set
         if (arguments.size() == 1) {
             try {
-                BufferedReader bufferedIn = new BufferedReader(new FileReader(arguments.get(0)));
-                bufferedIn.lines().forEach(tempLines::add);
-            } catch (FileNotFoundException e) {
 
+                FileReader inFR = new FileReader(arguments.get(0));
+                BufferedReader bufferedIn = new BufferedReader(inFR);
+                bufferedIn.lines().forEach(tempLines::add);
+                inFR.close();
+                bufferedIn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
                 //if there are problems with reaching the input file we switch to the console input
                 System.out.println("Input file name incorrect. " +
                         "Console input mode: type \"uniqstop\" to finish input.");
@@ -106,10 +121,8 @@ class Unique {
     }
 
     public void run() {
-        if (uActive && cActive) {
-            System.out.println("Error: -u and -c flags should not be active together");
-            return;
-        }
+        cmdInputCheck();
+        lines = getLines();
         ArrayList<String> out = iterating();
         returnLines(out);
     }
