@@ -27,12 +27,14 @@ class Main {
 
         try {
             parser.parseArgument(args);
-        } catch(CmdLineException e) {
+            bean.run();
+        }
+        catch(CmdLineException e) {
             System.err.println(e.getMessage());
             parser.printUsage(System.err);
         }
 
-        bean.run();
+
     }
 }
 

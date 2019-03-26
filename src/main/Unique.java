@@ -10,8 +10,6 @@ import java.util.Scanner;
 
 class Unique {
 
-    //ATTENTION: most of methods will have package-private access instead of private due to testing
-
     @Option(name = "-i", usage = "enables case ignore")
     private boolean iActive;
 
@@ -24,7 +22,7 @@ class Unique {
     @Option(name = "-s", usage = "ignore first N symbols")
     private int ignoreNum;
 
-    @Option(name = "-o", usage = "sets the output file" )
+    @Option(name = "-o", usage = "sets the output file")
     private String outName;
 
     @Argument
@@ -41,10 +39,12 @@ class Unique {
     //getting the input with getLines() method: from the file if input file name is given
     //or from console if input file is unreachable or if input file name was not given
     private ArrayList<String> lines = new ArrayList<>();
+
     private String cmdGetLine() {
         Scanner in = new Scanner(System.in);
         return in.nextLine();
     }
+
     private ArrayList<String> getLines() {
         ArrayList<String> tempLines = new ArrayList<>();
 
@@ -86,24 +86,13 @@ class Unique {
         return tempLines;
     }
 
-    //prints text representations of the flags/arguments given - for tests
-    public void printArgs() {
-        System.out.println("iActive:" + iActive);
-        System.out.println("uActive:" + uActive);
-        System.out.println("cActive:" + cActive);
-        System.out.println("ignoreNum:" + ignoreNum);
-        System.out.println("outName:" + outName);
-        System.out.println("others:" + arguments);
-    }
-
     //method for lines output: in file, if -o is active,
     // or in console, if output file is unreachable or if -o was not given
     private void returnLines(ArrayList<String> output) {
         if (outName == null) {
             System.out.println("console output mode:");
             for (String line : output) System.out.println(line);
-        }
-        else {
+        } else {
             try {
                 BufferedWriter bufferedOut = new BufferedWriter(new FileWriter(outName));
                 for (String line : output) {
@@ -111,8 +100,7 @@ class Unique {
                     bufferedOut.newLine();
                 }
                 bufferedOut.close();
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 System.out.println("Output file name incorrect." +
                         "Console output mode:");
                 for (String line : output) System.out.println(line);
@@ -170,8 +158,7 @@ class Unique {
             for (int i = 0; i < lines.size(); i++) {
                 if (isUnique(lines.get(i), i)) output.add(lines.get(i));
             }
-        }
-        else {
+        } else {
             int count = 0;
             String tempLine = lines.get(0);
 
@@ -187,8 +174,7 @@ class Unique {
                         output.add(count + " " + tempLine);
                         tempLine = line;
                         count = 1;
-                    }
-                    else {
+                    } else {
                         output.add(tempLine);
                         tempLine = line;
                     }
@@ -210,10 +196,5 @@ class Unique {
 
         }
         return output;
-    }
-
-    //printing all the input lines being held - utility and testing only
-    public void printLines() {
-        for (String line : lines) System.out.println(line);
     }
 }

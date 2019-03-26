@@ -1,10 +1,10 @@
 package main;
 
 import org.junit.Test;
-import sun.misc.IOUtils;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.InputMismatchException;
 import java.util.stream.Collectors;
 
@@ -23,8 +23,9 @@ public class Tests {
         String[] argsExc2 = {"-i", "-c", "-s", "-2"};
         assertThrows(InputMismatchException.class, ()-> Main.main(argsExc2));
 
-        String[] argsExc3 = {"-i", "-unexisting"};
-
+        //some random testing file, should throw the CmdLineException anyway
+        String[] argsExc3 = {"-i", "-unexisting", "C:\\Users\\Alexey\\IdeaProjects\\Uniq\\test\\main\\inI.txt"};
+        Main.main(argsExc3);
     }
 
     @Test
@@ -95,6 +96,30 @@ public class Tests {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("output file problems in cTest");
+        }
+        tempOut.delete();
+    }
+
+    @Test
+    public void uTest() {
+        File tempOut = new File("temp.txt");
+        String[] argsU = {"-u", "-o", "temp.txt", "C:\\Users\\Alexey\\IdeaProjects\\Uniq\\test\\main\\inU.txt"};
+        Main.main(argsU);
+        try {
+            FileReader outFR = new FileReader("temp.txt");
+            String progOut = new BufferedReader(outFR)
+                    .lines().collect(Collectors.joining("\n"));
+            outFR.close();
+
+            FileReader expectFR = new FileReader("C:\\Users\\Alexey\\IdeaProjects\\Uniq\\test\\main\\outU.txt");
+            String expected = new BufferedReader(expectFR)
+                    .lines().collect(Collectors.joining("\n"));
+            expectFR.close();
+
+            assertEquals(progOut, expected);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("output file problems in uTest");
         }
         tempOut.delete();
     }
