@@ -23,19 +23,17 @@ class Main {
     public static void main(String[] args) {
 
         //parsing arguments
-        Unique bean = new Unique();
-        CmdLineParser parser = new CmdLineParser(bean);
+        Unique temp = new Unique();
+        CmdLineParser parser = new CmdLineParser(temp);
 
         try {
             parser.parseArgument(args);
-            bean.run();
+            temp.run();
         }
         catch(CmdLineException e) {
             System.err.println(e.getMessage());
             parser.printUsage(System.err);
         }
-
-
     }
 }
 

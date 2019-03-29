@@ -49,7 +49,7 @@ class Unique {
      * Should be the only one element in arguments due to command line arguments/flags format.
      */
     @Argument
-    private ArrayList<String> arguments = new ArrayList<>();
+    private String inName;
 
     /**@throws InputMismatchException
      * check command line arguments for correctness.
@@ -69,16 +69,16 @@ class Unique {
     private ArrayList<String> lines = new ArrayList<>();
     private String cmdGetLine() {
         Scanner in = new Scanner(System.in);
-        return in.nextLine();
+        return  in.nextLine();
     }
     private ArrayList<String> getLines() {
         ArrayList<String> tempLines = new ArrayList<>();
 
         //if [file] field was set
-        if (arguments.size() == 1) {
+        if (inName != null) {
             try {
 
-                FileReader inFR = new FileReader(arguments.get(0));
+                FileReader inFR = new FileReader(inName);
                 BufferedReader bufferedIn = new BufferedReader(inFR);
                 bufferedIn.lines().forEach(tempLines::add);
                 inFR.close();
@@ -86,7 +86,7 @@ class Unique {
             } catch (Exception e) {
                 e.printStackTrace();
                 //if there are problems with reaching the input file we switch to the console input
-                System.out.println("Input file name incorrect. " +
+                System.out.println("Input file name incorrect: " + inName + ";\n" +
                         "Console input mode: type \"uniqstop\" to finish input.");
 
                 //"uniqstop" is the stop command for the end of input
