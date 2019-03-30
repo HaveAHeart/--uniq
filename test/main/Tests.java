@@ -31,8 +31,8 @@ public class Tests {
     @Test
     public void iTest() {
         File tempOut = new File("temp.txt");
-        String[] argsN = {"-i", "-o", "temp.txt", "test\\main\\inI.txt"};
-        Main.main(argsN);
+        String[] argsI = {"-i", "-o", "temp.txt", "test\\main\\inI.txt"};
+        Main.main(argsI);
         try {
             FileReader outFR = new FileReader("temp.txt");
             String progOut = new BufferedReader(outFR)
@@ -47,7 +47,7 @@ public class Tests {
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("output file problems in nTest");
+            System.out.println("output file problems in iTest");
         }
         tempOut.delete();
     }
@@ -155,7 +155,8 @@ public class Tests {
 
     @Before
     public void setUpStreams() {
-        inContent = new ByteArrayInputStream("uniqstop".getBytes());
+        String input = "uniqstop";
+        inContent = new ByteArrayInputStream(input.getBytes());
         System.setIn(inContent);
         System.setOut(new PrintStream(outContent));
     }

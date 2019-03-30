@@ -83,8 +83,8 @@ class Unique {
                 bufferedIn.lines().forEach(tempLines::add);
                 inFR.close();
                 bufferedIn.close();
-            } catch (Exception e) {
-                e.printStackTrace();
+            }
+            catch (IOException e) {
                 //if there are problems with reaching the input file we switch to the console input
                 System.out.println("Input file name incorrect: " + inName + ";\n" +
                         "Console input mode: type \"uniqstop\" to finish input.");
