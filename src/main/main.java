@@ -21,7 +21,6 @@ class Main {
 
 
     public static void main(String[] args) {
-
         //parsing arguments
         Unique temp = new Unique();
         CmdLineParser parser = new CmdLineParser(temp);
