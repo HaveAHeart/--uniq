@@ -76,13 +76,10 @@ class Unique {
 
         //if [file] field was set
         if (inName != null) {
-            try {
+            try (BufferedReader bufferedIn =
+                         new BufferedReader(new FileReader(inName))){
 
-                FileReader inFR = new FileReader(inName);
-                BufferedReader bufferedIn = new BufferedReader(inFR);
                 bufferedIn.lines().forEach(tempLines::add);
-                inFR.close();
-                bufferedIn.close();
             }
             catch (IOException e) {
                 //if there are problems with reaching the input file we switch to the console input
@@ -120,13 +117,12 @@ class Unique {
             System.out.println("console output mode:");
             for (String line : output) System.out.println(line);
         } else {
-            try {
-                BufferedWriter bufferedOut = new BufferedWriter(new FileWriter(outName));
+            try (BufferedWriter bufferedOut
+                         = new BufferedWriter(new FileWriter(outName))) {
                 for (String line : output) {
                     bufferedOut.write(line);
                     bufferedOut.newLine();
                 }
-                bufferedOut.close();
             } catch (IOException e) {
                 System.out.println("Output file name incorrect." +
                         "Console output mode:");
