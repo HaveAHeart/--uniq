@@ -20,13 +20,13 @@ class Unique {
      * output only unique lines (unique for the whole input).
      * Can not be used with count mode flag.
      */
-    @Option(name = "-u", usage = "enables unique lines output - does not work with -c flag")
+    @Option(name = "-u", forbids = "-c", usage = "enables unique lines output - does not work with -c flag")
     private boolean uActive;
 
     /** [-c] count mode:
      * added amount of lines replaced with tht line given.
      */
-    @Option(name = "-c", usage = "enables counting of replaced lines")
+    @Option(name = "-c", forbids = "-u", usage = "enables counting of replaced lines")
     private boolean cActive;
 
     /** [-s N] skip flag:
@@ -57,9 +57,7 @@ class Unique {
      * [-s N] N is negative.
      */
     public void cmdInputCheck() {
-        if (cActive && uActive)
-            throw new InputMismatchException("-c and -u flags should not be active at the same time");
-        else if (ignoreNum < 0)
+        if (ignoreNum < 0)
             throw new InputMismatchException("-s N error: N should be greater or equal to zero");
     }
 
@@ -178,6 +176,7 @@ class Unique {
         else if (lines.size() == 1) {
             if (cActive) output.add("1 " + lines.get(0));
             else output.add(lines.get(0));
+            return output;
         }
 
         //-u flag - if line is unique, add it to the output
