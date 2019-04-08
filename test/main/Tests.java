@@ -82,7 +82,7 @@ public class Tests {
 
     @Before
     public void setUpStreams() {
-        String input = "uniqstop";
+        String input = "aaa" + File.separator + "uniqstop";
         inContent = new ByteArrayInputStream(input.getBytes());
         System.setIn(inContent);
         System.setOut(new PrintStream(outContent));

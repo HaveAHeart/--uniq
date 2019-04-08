@@ -205,15 +205,15 @@ class Unique {
             //doing stuff with last line
             //if last line and buffered line are the same we only need to output buffered line
             //(with counter if -c is active)
-            if (compare(tempLine, lines.get(lines.size() - 1))) {
+            //if (compare(tempLine, lines.get(lines.size() - 1))) {
                 if (cActive) output.add(count + " " + tempLine);
                 else output.add(tempLine);
-            }
+            //}
             //if these lines are different - we need to output the last one (with proper count = 1 if -c is active)
-            else {
-                if (cActive) output.add(count + " " + lines.get(lines.size() - 1));
-                else output.add(lines.get(lines.size() - 1));
-            }
+            //else {
+            //    if (cActive) output.add(count + " " + lines.get(lines.size() - 1));
+            //    else output.add(lines.get(lines.size() - 1));
+            //}
 
         }
         return output;
