@@ -76,7 +76,6 @@ class Unique {
         if (inName != null) {
             try (BufferedReader bufferedIn =
                          new BufferedReader(new FileReader(inName))){
-
                 bufferedIn.lines().forEach(tempLines::add);
             }
             catch (IOException e) {

@@ -41,7 +41,8 @@ public class Tests {
         assertThrows(InputMismatchException.class, ()-> Main.main(argsExc2));
 
         //some random testing file, should throw the CmdLineException anyway
-        String[] argsExc3 = {"-i", "-unexisting", "test\\main\\inI.txt"};
+        String[] argsExc3 = {"-i", "-unexisting",
+                testDir + File.separator + "inI.txt"};
         Main.main(argsExc3);
     }
 
@@ -71,7 +72,6 @@ public class Tests {
 
     @Test
     public void icsTest() throws IOException {
-        File tempOut = new File("temp.txt");
         String[] args = {"-i", "-c", "-s", "1", "-o", "temp.txt", testDir + File.separator + "inICS.txt"};
         fileTesting(args, "outICS.txt");
     }
