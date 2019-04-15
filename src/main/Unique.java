@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-class Unique {
+public class Unique {
 
     /** [-i] caseIgnore flag:
      * ignore case of lines while comparing them.
@@ -65,10 +65,22 @@ class Unique {
      * or from console if input file is unreachable or if input file name was not given.
      */
     private ArrayList<String> lines = new ArrayList<>();
-    private String cmdGetLine() {
+
+
+    private ArrayList<String> cmdGetLines() {
+        ArrayList<String> tempLines = new ArrayList<String>();
+
         Scanner in = new Scanner(System.in);
-        return  in.nextLine();
+        String cmdIn = "";
+        while (!cmdIn.equals("uniqstop")) {
+            cmdIn = in.nextLine();
+            if (!cmdIn.equals("uniqstop")) tempLines.add(cmdIn);
+        }
+        in.close();
+
+        return tempLines;
     }
+
     private ArrayList<String> getLines() {
         ArrayList<String> tempLines = new ArrayList<>();
 
@@ -80,28 +92,21 @@ class Unique {
             }
             catch (IOException e) {
                 //if there are problems with reaching the input file we switch to the console input
-                System.out.println("Input file name incorrect: " + inName + ";\n" +
-                        "Console input mode: type \"uniqstop\" to finish input.");
 
+                System.out.println("Input file name incorrect: " + inName + ";" + System.lineSeparator() +
+                        "Console input mode: type \"uniqstop\" to finish input.");
                 //"uniqstop" is the stop command for the end of input
-                String cmdIn = "";
-                while (!cmdIn.equals("uniqstop")) {
-                    cmdIn = cmdGetLine();
-                    if (!cmdIn.equals("uniqstop")) tempLines.add(cmdIn);
-                }
+
+                tempLines = cmdGetLines();
             }
 
         }
         //if [file] field was not set - console input
         else {
             System.out.println("console input mode: type \"uniqstop\" to finish input.");
-
             //"uniqstop" is the stop command for the end of input
-            String cmdIn = "";
-            while (!cmdIn.equals("uniqstop")) {
-                cmdIn = cmdGetLine();
-                if (!cmdIn.equals("uniqstop")) tempLines.add(cmdIn);
-            }
+
+            tempLines = cmdGetLines();
         }
         return tempLines;
     }
